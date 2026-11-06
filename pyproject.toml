@@ -27,3 +27,20 @@ addopts = "-ra"
 markers = [
     "slow: end-to-end tests that take more than a few seconds",
 ]
+
+[tool.coverage.run]
+branch = true
+omit = [
+  "vlmgrpo/train_sft.py",
+  "vlmgrpo/train_grpo.py",
+  "vlmgrpo/train_grpo_trl.py",
+  "vlmgrpo/analysis/compare.py",
+  "vlmgrpo/analysis/plots.py",
+]
+
+[tool.coverage.report]
+exclude_lines = [
+  "pragma: no cover",
+  "if __name__ == .__main__.:",
+  "raise NotImplementedError",
+]
