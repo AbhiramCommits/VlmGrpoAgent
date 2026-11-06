@@ -1,0 +1,1212 @@
+{
+  "environment": {
+    "device": "mps",
+    "model_tier": "tiny",
+    "dtype": "float32",
+    "commit_sha": "92d1644",
+    "model_id": "HuggingFaceTB/SmolVLM-256M-Instruct",
+    "model_params": 256484928,
+    "eval_wall_clock_hours": 0.9751,
+    "train_wall_clock_hours": 0.5468,
+    "total_wall_clock_hours": 1.5219,
+    "total_gpu_hours": 0.0,
+    "total_cpu_hours": 1.5219,
+    "generated_at": 1793975871
+  },
+  "config": {
+    "seed": 1234,
+    "eval_k": 4,
+    "eval_max_items": 4,
+    "max_turns": 4,
+    "reward_weights": {
+      "w_answer": 1.0,
+      "w_tool": 0.2,
+      "w_trace": 0.3,
+      "w_format": 0.1,
+      "w_length": 0.05,
+      "length_budget": 1600
+    },
+    "sft": {
+      "lora_r": 16,
+      "lora_alpha": 32,
+      "lora_dropout": 0.05,
+      "lr": 0.0001,
+      "epochs": 2,
+      "batch_size": 1,
+      "grad_accum": 1,
+      "max_length": 1024,
+      "warmup_ratio": 0.05,
+      "weight_decay": 0.0,
+      "max_steps": -1,
+      "full_params": false,
+      "grad_clip": 1.0,
+      "val_every": 25,
+      "val_items": 8
+    },
+    "grpo": {
+      "group_size": 4,
+      "steps": 3,
+      "lr": 1e-05,
+      "temperature": 0.9,
+      "top_p": 0.95,
+      "clip_eps": 0.2,
+      "kl_beta": 0.02,
+      "kl_kind": "k3",
+      "last_turn_only": false,
+      "prompts_per_step": 1,
+      "max_length": 1280,
+      "max_new_tokens": 64,
+      "max_turns": 2,
+      "val_every": 2,
+      "val_items": 6,
+      "eval_k": 1,
+      "grad_clip": 1.0,
+      "skip_zero_variance": true,
+      "seed": 0,
+      "rollout_backend": "hf"
+    }
+  },
+  "training": {
+    "sft": {
+      "phase": "sft",
+      "tier": "tiny",
+      "device": "mps",
+      "dtype": "float32",
+      "params": 262254144,
+      "trainable_params": 5769216,
+      "steps": 150,
+      "epochs": 2,
+      "examples": 400,
+      "batch_size": 1,
+      "grad_accum": 1,
+      "wall_clock_sec": 1515.87,
+      "wall_clock_hours": 0.4211,
+      "best_val_loss": 0.1342,
+      "final_val_loss": 0.1342,
+      "commit_sha": "92d1644",
+      "checkpoint": "runs/tiny-main/sft"
+    },
+    "grpo": {
+      "phase": "grpo",
+      "tier": "tiny",
+      "device": "mps",
+      "dtype": "float32",
+      "trainable_params": 5769216,
+      "steps": 3,
+      "group_size": 4,
+      "skipped_groups": 1,
+      "rollouts": 12,
+      "rollouts_per_min": 1.59,
+      "mean_step_seconds": 112.51,
+      "reward_first_window": 0.1941,
+      "reward_last_window": 0.0181,
+      "completion_first_window": 0.0,
+      "completion_last_window": 0.0,
+      "kl_beta": 0.02,
+      "clip_eps": 0.2,
+      "last_turn_only": false,
+      "peak_memory_mb": 5281.0,
+      "wall_clock_sec": 452.44,
+      "wall_clock_hours": 0.1257,
+      "commit_sha": "92d1644",
+      "checkpoint": "runs/tiny-main/grpo"
+    }
+  },
+  "metrics": {
+    "BASE": {
+      "test": {
+        "checkpoint": "base",
+        "checkpoint_path": null,
+        "split": "test",
+        "k": 4,
+        "n_items": 4,
+        "n_rollouts": 16,
+        "pass@1": 0.0,
+        "pass@k": 0.0,
+        "task_completion_rate": 0.0,
+        "tool_call_schema_validity": 0.0,
+        "tool_call_schema_validity_rollout_mean": 0.0,
+        "mean_turns": 3.875,
+        "perception_recall": 0.1005,
+        "tool_trace_rate": 0.0,
+        "format_rate": 0.0,
+        "mean_reward": -0.0051,
+        "per_family": {
+          "chart_agg": {
+            "n_items": 1,
+            "n_rollouts": 4,
+            "pass@1": 0.0,
+            "task_completion_rate": 0.0,
+            "tool_call_schema_validity": 0.0,
+            "mean_turns": 4.0,
+            "perception_recall": 0.1
+          },
+          "doc_table": {
+            "n_items": 1,
+            "n_rollouts": 4,
+            "pass@1": 0.0,
+            "task_completion_rate": 0.0,
+            "tool_call_schema_validity": 0.0,
+            "mean_turns": 4.0,
+            "perception_recall": 0.0938
+          },
+          "screenshot_ui": {
+            "n_items": 1,
+            "n_rollouts": 4,
+            "pass@1": 0.0,
+            "task_completion_rate": 0.0,
+            "tool_call_schema_validity": 0.0,
+            "mean_turns": 3.5,
+            "perception_recall": 0.125
+          },
+          "multi_frame": {
+            "n_items": 1,
+            "n_rollouts": 4,
+            "pass@1": 0.0,
+            "task_completion_rate": 0.0,
+            "tool_call_schema_validity": 0.0,
+            "mean_turns": 4.0,
+            "perception_recall": 0.0833
+          }
+        },
+        "environment": {
+          "device": "mps",
+          "model_tier": "tiny",
+          "model_id": "HuggingFaceTB/SmolVLM-256M-Instruct",
+          "dtype": "float32",
+          "backend": "hf",
+          "rollout_backend_requested": "hf",
+          "commit_sha": "92d1644",
+          "model_params": 256484928,
+          "load_seconds": 24.74,
+          "eval_wall_clock_sec": 915.17,
+          "eval_wall_clock_hours": 0.2542,
+          "timestamp": 1793970396
+        }
+      },
+      "test_hard": {
+        "checkpoint": "base",
+        "checkpoint_path": null,
+        "split": "test_hard",
+        "k": 4,
+        "n_items": 4,
+        "n_rollouts": 16,
+        "pass@1": 0.0,
+        "pass@k": 0.0,
+        "task_completion_rate": 0.0,
+        "tool_call_schema_validity": 0.0,
+        "tool_call_schema_validity_rollout_mean": 0.0,
+        "mean_turns": 4.0,
+        "perception_recall": 0.0633,
+        "tool_trace_rate": 0.0,
+        "format_rate": 0.0,
+        "mean_reward": -0.0083,
+        "per_family": {
+          "chart_agg": {
+            "n_items": 1,
+            "n_rollouts": 4,
+            "pass@1": 0.0,
+            "task_completion_rate": 0.0,
+            "tool_call_schema_validity": 0.0,
+            "mean_turns": 4.0,
+            "perception_recall": 0.1072
+          },
+          "doc_table": {
+            "n_items": 1,
+            "n_rollouts": 4,
+            "pass@1": 0.0,
+            "task_completion_rate": 0.0,
+            "tool_call_schema_validity": 0.0,
+            "mean_turns": 4.0,
+            "perception_recall": 0.0833
+          },
+          "screenshot_ui": {
+            "n_items": 1,
+            "n_rollouts": 4,
+            "pass@1": 0.0,
+            "task_completion_rate": 0.0,
+            "tool_call_schema_validity": 0.0,
+            "mean_turns": 4.0,
+            "perception_recall": 0.0625
+          },
+          "multi_frame": {
+            "n_items": 1,
+            "n_rollouts": 4,
+            "pass@1": 0.0,
+            "task_completion_rate": 0.0,
+            "tool_call_schema_validity": 0.0,
+            "mean_turns": 4.0,
+            "perception_recall": 0.0
+          }
+        },
+        "environment": {
+          "device": "mps",
+          "model_tier": "tiny",
+          "model_id": "HuggingFaceTB/SmolVLM-256M-Instruct",
+          "dtype": "float32",
+          "backend": "hf",
+          "rollout_backend_requested": "hf",
+          "commit_sha": "92d1644",
+          "model_params": 256484928,
+          "load_seconds": 9.03,
+          "eval_wall_clock_sec": 489.49,
+          "eval_wall_clock_hours": 0.136,
+          "timestamp": 1793970897
+        }
+      }
+    },
+    "SFT": {
+      "test": {
+        "checkpoint": "sft",
+        "checkpoint_path": "runs/tiny-main/sft",
+        "split": "test",
+        "k": 4,
+        "n_items": 4,
+        "n_rollouts": 16,
+        "pass@1": 0.0,
+        "pass@k": 0.0,
+        "task_completion_rate": 0.0,
+        "tool_call_schema_validity": 0.5,
+        "tool_call_schema_validity_rollout_mean": 0.3125,
+        "mean_turns": 3.0625,
+        "perception_recall": 0.2469,
+        "tool_trace_rate": 0.3125,
+        "format_rate": 0.25,
+        "mean_reward": 0.1688,
+        "per_family": {
+          "chart_agg": {
+            "n_items": 1,
+            "n_rollouts": 4,
+            "pass@1": 0.0,
+            "task_completion_rate": 0.0,
+            "tool_call_schema_validity": 0.0,
+            "mean_turns": 1.75,
+            "perception_recall": 0.05
+          },
+          "doc_table": {
+            "n_items": 1,
+            "n_rollouts": 4,
+            "pass@1": 0.0,
+            "task_completion_rate": 0.0,
+            "tool_call_schema_validity": 0.5,
+            "mean_turns": 3.25,
+            "perception_recall": 0.4375
+          },
+          "screenshot_ui": {
+            "n_items": 1,
+            "n_rollouts": 4,
+            "pass@1": 0.0,
+            "task_completion_rate": 0.0,
+            "tool_call_schema_validity": 0.0,
+            "mean_turns": 3.25,
+            "perception_recall": 0.0
+          },
+          "multi_frame": {
+            "n_items": 1,
+            "n_rollouts": 4,
+            "pass@1": 0.0,
+            "task_completion_rate": 0.0,
+            "tool_call_schema_validity": 0.75,
+            "mean_turns": 4.0,
+            "perception_recall": 0.5
+          }
+        },
+        "environment": {
+          "device": "mps",
+          "model_tier": "tiny",
+          "model_id": "HuggingFaceTB/SmolVLM-256M-Instruct",
+          "dtype": "float32",
+          "backend": "hf",
+          "rollout_backend_requested": "hf",
+          "commit_sha": "92d1644",
+          "model_params": 262254144,
+          "load_seconds": 14.55,
+          "eval_wall_clock_sec": 659.33,
+          "eval_wall_clock_hours": 0.1831,
+          "timestamp": 1793971611
+        }
+      },
+      "test_hard": {
+        "checkpoint": "sft",
+        "checkpoint_path": "runs/tiny-main/sft",
+        "split": "test_hard",
+        "k": 4,
+        "n_items": 4,
+        "n_rollouts": 16,
+        "pass@1": 0.0,
+        "pass@k": 0.0,
+        "task_completion_rate": 0.0,
+        "tool_call_schema_validity": 0.1176,
+        "tool_call_schema_validity_rollout_mean": 0.125,
+        "mean_turns": 2.8125,
+        "perception_recall": 0.2656,
+        "tool_trace_rate": 0.0,
+        "format_rate": 0.4375,
+        "mean_reward": 0.0576,
+        "per_family": {
+          "chart_agg": {
+            "n_items": 1,
+            "n_rollouts": 4,
+            "pass@1": 0.0,
+            "task_completion_rate": 0.0,
+            "tool_call_schema_validity": 0.0,
+            "mean_turns": 1.25,
+            "perception_recall": 0.25
+          },
+          "doc_table": {
+            "n_items": 1,
+            "n_rollouts": 4,
+            "pass@1": 0.0,
+            "task_completion_rate": 0.0,
+            "tool_call_schema_validity": 0.25,
+            "mean_turns": 2.25,
+            "perception_recall": 0.25
+          },
+          "screenshot_ui": {
+            "n_items": 1,
+            "n_rollouts": 4,
+            "pass@1": 0.0,
+            "task_completion_rate": 0.0,
+            "tool_call_schema_validity": 0.0,
+            "mean_turns": 4.0,
+            "perception_recall": 0.0
+          },
+          "multi_frame": {
+            "n_items": 1,
+            "n_rollouts": 4,
+            "pass@1": 0.0,
+            "task_completion_rate": 0.0,
+            "tool_call_schema_validity": 0.25,
+            "mean_turns": 3.75,
+            "perception_recall": 0.5625
+          }
+        },
+        "environment": {
+          "device": "mps",
+          "model_tier": "tiny",
+          "model_id": "HuggingFaceTB/SmolVLM-256M-Instruct",
+          "dtype": "float32",
+          "backend": "hf",
+          "rollout_backend_requested": "hf",
+          "commit_sha": "92d1644",
+          "model_params": 262254144,
+          "load_seconds": 11.25,
+          "eval_wall_clock_sec": 407.17,
+          "eval_wall_clock_hours": 0.1131,
+          "timestamp": 1793972030
+        }
+      }
+    },
+    "GRPO": {
+      "test": {
+        "checkpoint": "grpo",
+        "checkpoint_path": "runs/tiny-main/grpo",
+        "split": "test",
+        "k": 4,
+        "n_items": 4,
+        "n_rollouts": 16,
+        "pass@1": 0.0,
+        "pass@k": 0.0,
+        "task_completion_rate": 0.0,
+        "tool_call_schema_validity": 0.5,
+        "tool_call_schema_validity_rollout_mean": 0.2188,
+        "mean_turns": 2.75,
+        "perception_recall": 0.2469,
+        "tool_trace_rate": 0.3125,
+        "format_rate": 0.375,
+        "mean_reward": 0.1642,
+        "per_family": {
+          "chart_agg": {
+            "n_items": 1,
+            "n_rollouts": 4,
+            "pass@1": 0.0,
+            "task_completion_rate": 0.0,
+            "tool_call_schema_validity": 0.0,
+            "mean_turns": 1.25,
+            "perception_recall": 0.05
+          },
+          "doc_table": {
+            "n_items": 1,
+            "n_rollouts": 4,
+            "pass@1": 0.0,
+            "task_completion_rate": 0.0,
+            "tool_call_schema_validity": 0.25,
+            "mean_turns": 2.5,
+            "perception_recall": 0.4375
+          },
+          "screenshot_ui": {
+            "n_items": 1,
+            "n_rollouts": 4,
+            "pass@1": 0.0,
+            "task_completion_rate": 0.0,
+            "tool_call_schema_validity": 0.0,
+            "mean_turns": 3.25,
+            "perception_recall": 0.0
+          },
+          "multi_frame": {
+            "n_items": 1,
+            "n_rollouts": 4,
+            "pass@1": 0.0,
+            "task_completion_rate": 0.0,
+            "tool_call_schema_validity": 0.625,
+            "mean_turns": 4.0,
+            "perception_recall": 0.5
+          }
+        },
+        "environment": {
+          "device": "mps",
+          "model_tier": "tiny",
+          "model_id": "HuggingFaceTB/SmolVLM-256M-Instruct",
+          "dtype": "float32",
+          "backend": "hf",
+          "rollout_backend_requested": "hf",
+          "commit_sha": "92d1644",
+          "model_params": 262254144,
+          "load_seconds": 11.12,
+          "eval_wall_clock_sec": 568.29,
+          "eval_wall_clock_hours": 0.1579,
+          "timestamp": 1793975136
+        }
+      },
+      "test_hard": {
+        "checkpoint": "grpo",
+        "checkpoint_path": "runs/tiny-main/grpo",
+        "split": "test_hard",
+        "k": 4,
+        "n_items": 4,
+        "n_rollouts": 16,
+        "pass@1": 0.0,
+        "pass@k": 0.0,
+        "task_completion_rate": 0.0,
+        "tool_call_schema_validity": 0.1538,
+        "tool_call_schema_validity_rollout_mean": 0.125,
+        "mean_turns": 2.625,
+        "perception_recall": 0.2894,
+        "tool_trace_rate": 0.0,
+        "format_rate": 0.4375,
+        "mean_reward": 0.0578,
+        "per_family": {
+          "chart_agg": {
+            "n_items": 1,
+            "n_rollouts": 4,
+            "pass@1": 0.0,
+            "task_completion_rate": 0.0,
+            "tool_call_schema_validity": 0.0,
+            "mean_turns": 1.25,
+            "perception_recall": 0.1786
+          },
+          "doc_table": {
+            "n_items": 1,
+            "n_rollouts": 4,
+            "pass@1": 0.0,
+            "task_completion_rate": 0.0,
+            "tool_call_schema_validity": 0.25,
+            "mean_turns": 2.25,
+            "perception_recall": 0.4167
+          },
+          "screenshot_ui": {
+            "n_items": 1,
+            "n_rollouts": 4,
+            "pass@1": 0.0,
+            "task_completion_rate": 0.0,
+            "tool_call_schema_validity": 0.0,
+            "mean_turns": 3.25,
+            "perception_recall": 0.0
+          },
+          "multi_frame": {
+            "n_items": 1,
+            "n_rollouts": 4,
+            "pass@1": 0.0,
+            "task_completion_rate": 0.0,
+            "tool_call_schema_validity": 0.25,
+            "mean_turns": 3.75,
+            "perception_recall": 0.5625
+          }
+        },
+        "environment": {
+          "device": "mps",
+          "model_tier": "tiny",
+          "model_id": "HuggingFaceTB/SmolVLM-256M-Instruct",
+          "dtype": "float32",
+          "backend": "hf",
+          "rollout_backend_requested": "hf",
+          "commit_sha": "92d1644",
+          "model_params": 262254144,
+          "load_seconds": 12.88,
+          "eval_wall_clock_sec": 470.87,
+          "eval_wall_clock_hours": 0.1308,
+          "timestamp": 1793975621
+        }
+      }
+    }
+  },
+  "per_family": {
+    "BASE": {
+      "test": {
+        "chart_agg": {
+          "n_items": 1,
+          "n_rollouts": 4,
+          "pass@1": 0.0,
+          "task_completion_rate": 0.0,
+          "tool_call_schema_validity": 0.0,
+          "mean_turns": 4.0,
+          "perception_recall": 0.1
+        },
+        "doc_table": {
+          "n_items": 1,
+          "n_rollouts": 4,
+          "pass@1": 0.0,
+          "task_completion_rate": 0.0,
+          "tool_call_schema_validity": 0.0,
+          "mean_turns": 4.0,
+          "perception_recall": 0.0938
+        },
+        "screenshot_ui": {
+          "n_items": 1,
+          "n_rollouts": 4,
+          "pass@1": 0.0,
+          "task_completion_rate": 0.0,
+          "tool_call_schema_validity": 0.0,
+          "mean_turns": 3.5,
+          "perception_recall": 0.125
+        },
+        "multi_frame": {
+          "n_items": 1,
+          "n_rollouts": 4,
+          "pass@1": 0.0,
+          "task_completion_rate": 0.0,
+          "tool_call_schema_validity": 0.0,
+          "mean_turns": 4.0,
+          "perception_recall": 0.0833
+        }
+      },
+      "test_hard": {
+        "chart_agg": {
+          "n_items": 1,
+          "n_rollouts": 4,
+          "pass@1": 0.0,
+          "task_completion_rate": 0.0,
+          "tool_call_schema_validity": 0.0,
+          "mean_turns": 4.0,
+          "perception_recall": 0.1072
+        },
+        "doc_table": {
+          "n_items": 1,
+          "n_rollouts": 4,
+          "pass@1": 0.0,
+          "task_completion_rate": 0.0,
+          "tool_call_schema_validity": 0.0,
+          "mean_turns": 4.0,
+          "perception_recall": 0.0833
+        },
+        "screenshot_ui": {
+          "n_items": 1,
+          "n_rollouts": 4,
+          "pass@1": 0.0,
+          "task_completion_rate": 0.0,
+          "tool_call_schema_validity": 0.0,
+          "mean_turns": 4.0,
+          "perception_recall": 0.0625
+        },
+        "multi_frame": {
+          "n_items": 1,
+          "n_rollouts": 4,
+          "pass@1": 0.0,
+          "task_completion_rate": 0.0,
+          "tool_call_schema_validity": 0.0,
+          "mean_turns": 4.0,
+          "perception_recall": 0.0
+        }
+      }
+    },
+    "SFT": {
+      "test": {
+        "chart_agg": {
+          "n_items": 1,
+          "n_rollouts": 4,
+          "pass@1": 0.0,
+          "task_completion_rate": 0.0,
+          "tool_call_schema_validity": 0.0,
+          "mean_turns": 1.75,
+          "perception_recall": 0.05
+        },
+        "doc_table": {
+          "n_items": 1,
+          "n_rollouts": 4,
+          "pass@1": 0.0,
+          "task_completion_rate": 0.0,
+          "tool_call_schema_validity": 0.5,
+          "mean_turns": 3.25,
+          "perception_recall": 0.4375
+        },
+        "screenshot_ui": {
+          "n_items": 1,
+          "n_rollouts": 4,
+          "pass@1": 0.0,
+          "task_completion_rate": 0.0,
+          "tool_call_schema_validity": 0.0,
+          "mean_turns": 3.25,
+          "perception_recall": 0.0
+        },
+        "multi_frame": {
+          "n_items": 1,
+          "n_rollouts": 4,
+          "pass@1": 0.0,
+          "task_completion_rate": 0.0,
+          "tool_call_schema_validity": 0.75,
+          "mean_turns": 4.0,
+          "perception_recall": 0.5
+        }
+      },
+      "test_hard": {
+        "chart_agg": {
+          "n_items": 1,
+          "n_rollouts": 4,
+          "pass@1": 0.0,
+          "task_completion_rate": 0.0,
+          "tool_call_schema_validity": 0.0,
+          "mean_turns": 1.25,
+          "perception_recall": 0.25
+        },
+        "doc_table": {
+          "n_items": 1,
+          "n_rollouts": 4,
+          "pass@1": 0.0,
+          "task_completion_rate": 0.0,
+          "tool_call_schema_validity": 0.25,
+          "mean_turns": 2.25,
+          "perception_recall": 0.25
+        },
+        "screenshot_ui": {
+          "n_items": 1,
+          "n_rollouts": 4,
+          "pass@1": 0.0,
+          "task_completion_rate": 0.0,
+          "tool_call_schema_validity": 0.0,
+          "mean_turns": 4.0,
+          "perception_recall": 0.0
+        },
+        "multi_frame": {
+          "n_items": 1,
+          "n_rollouts": 4,
+          "pass@1": 0.0,
+          "task_completion_rate": 0.0,
+          "tool_call_schema_validity": 0.25,
+          "mean_turns": 3.75,
+          "perception_recall": 0.5625
+        }
+      }
+    },
+    "GRPO": {
+      "test": {
+        "chart_agg": {
+          "n_items": 1,
+          "n_rollouts": 4,
+          "pass@1": 0.0,
+          "task_completion_rate": 0.0,
+          "tool_call_schema_validity": 0.0,
+          "mean_turns": 1.25,
+          "perception_recall": 0.05
+        },
+        "doc_table": {
+          "n_items": 1,
+          "n_rollouts": 4,
+          "pass@1": 0.0,
+          "task_completion_rate": 0.0,
+          "tool_call_schema_validity": 0.25,
+          "mean_turns": 2.5,
+          "perception_recall": 0.4375
+        },
+        "screenshot_ui": {
+          "n_items": 1,
+          "n_rollouts": 4,
+          "pass@1": 0.0,
+          "task_completion_rate": 0.0,
+          "tool_call_schema_validity": 0.0,
+          "mean_turns": 3.25,
+          "perception_recall": 0.0
+        },
+        "multi_frame": {
+          "n_items": 1,
+          "n_rollouts": 4,
+          "pass@1": 0.0,
+          "task_completion_rate": 0.0,
+          "tool_call_schema_validity": 0.625,
+          "mean_turns": 4.0,
+          "perception_recall": 0.5
+        }
+      },
+      "test_hard": {
+        "chart_agg": {
+          "n_items": 1,
+          "n_rollouts": 4,
+          "pass@1": 0.0,
+          "task_completion_rate": 0.0,
+          "tool_call_schema_validity": 0.0,
+          "mean_turns": 1.25,
+          "perception_recall": 0.1786
+        },
+        "doc_table": {
+          "n_items": 1,
+          "n_rollouts": 4,
+          "pass@1": 0.0,
+          "task_completion_rate": 0.0,
+          "tool_call_schema_validity": 0.25,
+          "mean_turns": 2.25,
+          "perception_recall": 0.4167
+        },
+        "screenshot_ui": {
+          "n_items": 1,
+          "n_rollouts": 4,
+          "pass@1": 0.0,
+          "task_completion_rate": 0.0,
+          "tool_call_schema_validity": 0.0,
+          "mean_turns": 3.25,
+          "perception_recall": 0.0
+        },
+        "multi_frame": {
+          "n_items": 1,
+          "n_rollouts": 4,
+          "pass@1": 0.0,
+          "task_completion_rate": 0.0,
+          "tool_call_schema_validity": 0.25,
+          "mean_turns": 3.75,
+          "perception_recall": 0.5625
+        }
+      }
+    }
+  },
+  "deltas": {
+    "test": {
+      "BASE": {
+        "vs_SFT": {
+          "absolute": {
+            "pass@1": 0.0,
+            "pass@k": 0.0,
+            "task_completion_rate": 0.0,
+            "tool_call_schema_validity": -0.5,
+            "mean_turns": 0.8125,
+            "perception_recall": -0.1464
+          },
+          "relative": {
+            "pass@1": null,
+            "pass@k": null,
+            "task_completion_rate": null,
+            "tool_call_schema_validity": -1.0,
+            "mean_turns": 0.2653,
+            "perception_recall": -0.593
+          }
+        }
+      },
+      "SFT": {
+        "vs_BASE": {
+          "absolute": {
+            "pass@1": 0.0,
+            "pass@k": 0.0,
+            "task_completion_rate": 0.0,
+            "tool_call_schema_validity": 0.5,
+            "mean_turns": -0.8125,
+            "perception_recall": 0.1464
+          },
+          "relative": {
+            "pass@1": null,
+            "pass@k": null,
+            "task_completion_rate": null,
+            "tool_call_schema_validity": null,
+            "mean_turns": -0.2097,
+            "perception_recall": 1.4567
+          }
+        }
+      },
+      "GRPO": {
+        "vs_BASE": {
+          "absolute": {
+            "pass@1": 0.0,
+            "pass@k": 0.0,
+            "task_completion_rate": 0.0,
+            "tool_call_schema_validity": 0.5,
+            "mean_turns": -1.125,
+            "perception_recall": 0.1464
+          },
+          "relative": {
+            "pass@1": null,
+            "pass@k": null,
+            "task_completion_rate": null,
+            "tool_call_schema_validity": null,
+            "mean_turns": -0.2903,
+            "perception_recall": 1.4567
+          }
+        },
+        "vs_SFT": {
+          "absolute": {
+            "pass@1": 0.0,
+            "pass@k": 0.0,
+            "task_completion_rate": 0.0,
+            "tool_call_schema_validity": 0.0,
+            "mean_turns": -0.3125,
+            "perception_recall": 0.0
+          },
+          "relative": {
+            "pass@1": null,
+            "pass@k": null,
+            "task_completion_rate": null,
+            "tool_call_schema_validity": 0.0,
+            "mean_turns": -0.102,
+            "perception_recall": 0.0
+          }
+        }
+      }
+    },
+    "test_hard": {
+      "BASE": {
+        "vs_SFT": {
+          "absolute": {
+            "pass@1": 0.0,
+            "pass@k": 0.0,
+            "task_completion_rate": 0.0,
+            "tool_call_schema_validity": -0.1176,
+            "mean_turns": 1.1875,
+            "perception_recall": -0.2023
+          },
+          "relative": {
+            "pass@1": null,
+            "pass@k": null,
+            "task_completion_rate": null,
+            "tool_call_schema_validity": -1.0,
+            "mean_turns": 0.4222,
+            "perception_recall": -0.7617
+          }
+        }
+      },
+      "SFT": {
+        "vs_BASE": {
+          "absolute": {
+            "pass@1": 0.0,
+            "pass@k": 0.0,
+            "task_completion_rate": 0.0,
+            "tool_call_schema_validity": 0.1176,
+            "mean_turns": -1.1875,
+            "perception_recall": 0.2023
+          },
+          "relative": {
+            "pass@1": null,
+            "pass@k": null,
+            "task_completion_rate": null,
+            "tool_call_schema_validity": null,
+            "mean_turns": -0.2969,
+            "perception_recall": 3.1959
+          }
+        }
+      },
+      "GRPO": {
+        "vs_BASE": {
+          "absolute": {
+            "pass@1": 0.0,
+            "pass@k": 0.0,
+            "task_completion_rate": 0.0,
+            "tool_call_schema_validity": 0.1538,
+            "mean_turns": -1.375,
+            "perception_recall": 0.2261
+          },
+          "relative": {
+            "pass@1": null,
+            "pass@k": null,
+            "task_completion_rate": null,
+            "tool_call_schema_validity": null,
+            "mean_turns": -0.3438,
+            "perception_recall": 3.5719
+          }
+        },
+        "vs_SFT": {
+          "absolute": {
+            "pass@1": 0.0,
+            "pass@k": 0.0,
+            "task_completion_rate": 0.0,
+            "tool_call_schema_validity": 0.0362,
+            "mean_turns": -0.1875,
+            "perception_recall": 0.0238
+          },
+          "relative": {
+            "pass@1": null,
+            "pass@k": null,
+            "task_completion_rate": null,
+            "tool_call_schema_validity": 0.3078,
+            "mean_turns": -0.0667,
+            "perception_recall": 0.0896
+          }
+        }
+      }
+    }
+  },
+  "failure_mix": {
+    "test": {
+      "base": {
+        "n_rollouts": 16,
+        "n_failed": 16,
+        "failure_rate": 1.0,
+        "counts": {
+          "PERCEPTION": 0,
+          "PLANNING": 0,
+          "TOOL_SCHEMA": 0,
+          "EXECUTION": 0,
+          "ARITHMETIC": 0,
+          "FORMAT": 16,
+          "BUDGET": 0
+        },
+        "rates": {
+          "PERCEPTION": 0.0,
+          "PLANNING": 0.0,
+          "TOOL_SCHEMA": 0.0,
+          "EXECUTION": 0.0,
+          "ARITHMETIC": 0.0,
+          "FORMAT": 1.0,
+          "BUDGET": 0.0
+        },
+        "dominant_bucket": "FORMAT",
+        "success_count": 0,
+        "per_family": {
+          "chart_agg": {
+            "FORMAT": 4
+          },
+          "doc_table": {
+            "FORMAT": 4
+          },
+          "screenshot_ui": {
+            "FORMAT": 4
+          },
+          "multi_frame": {
+            "FORMAT": 4
+          }
+        }
+      },
+      "sft": {
+        "n_rollouts": 16,
+        "n_failed": 16,
+        "failure_rate": 1.0,
+        "counts": {
+          "PERCEPTION": 3,
+          "PLANNING": 1,
+          "TOOL_SCHEMA": 0,
+          "EXECUTION": 0,
+          "ARITHMETIC": 0,
+          "FORMAT": 7,
+          "BUDGET": 5
+        },
+        "rates": {
+          "PERCEPTION": 0.1875,
+          "PLANNING": 0.0625,
+          "TOOL_SCHEMA": 0.0,
+          "EXECUTION": 0.0,
+          "ARITHMETIC": 0.0,
+          "FORMAT": 0.4375,
+          "BUDGET": 0.3125
+        },
+        "dominant_bucket": "FORMAT",
+        "success_count": 0,
+        "per_family": {
+          "chart_agg": {
+            "PERCEPTION": 1,
+            "FORMAT": 3
+          },
+          "doc_table": {
+            "BUDGET": 1,
+            "PLANNING": 1,
+            "PERCEPTION": 1,
+            "FORMAT": 1
+          },
+          "screenshot_ui": {
+            "FORMAT": 3,
+            "PERCEPTION": 1
+          },
+          "multi_frame": {
+            "BUDGET": 4
+          }
+        }
+      },
+      "grpo": {
+        "n_rollouts": 16,
+        "n_failed": 16,
+        "failure_rate": 1.0,
+        "counts": {
+          "PERCEPTION": 4,
+          "PLANNING": 1,
+          "TOOL_SCHEMA": 1,
+          "EXECUTION": 0,
+          "ARITHMETIC": 0,
+          "FORMAT": 5,
+          "BUDGET": 5
+        },
+        "rates": {
+          "PERCEPTION": 0.25,
+          "PLANNING": 0.0625,
+          "TOOL_SCHEMA": 0.0625,
+          "EXECUTION": 0.0,
+          "ARITHMETIC": 0.0,
+          "FORMAT": 0.3125,
+          "BUDGET": 0.3125
+        },
+        "dominant_bucket": "FORMAT",
+        "success_count": 0,
+        "per_family": {
+          "chart_agg": {
+            "PERCEPTION": 2,
+            "FORMAT": 2
+          },
+          "doc_table": {
+            "BUDGET": 1,
+            "PLANNING": 1,
+            "PERCEPTION": 1,
+            "TOOL_SCHEMA": 1
+          },
+          "screenshot_ui": {
+            "FORMAT": 3,
+            "PERCEPTION": 1
+          },
+          "multi_frame": {
+            "BUDGET": 4
+          }
+        }
+      }
+    },
+    "test_hard": {
+      "base": {
+        "n_rollouts": 16,
+        "n_failed": 16,
+        "failure_rate": 1.0,
+        "counts": {
+          "PERCEPTION": 0,
+          "PLANNING": 0,
+          "TOOL_SCHEMA": 0,
+          "EXECUTION": 0,
+          "ARITHMETIC": 0,
+          "FORMAT": 16,
+          "BUDGET": 0
+        },
+        "rates": {
+          "PERCEPTION": 0.0,
+          "PLANNING": 0.0,
+          "TOOL_SCHEMA": 0.0,
+          "EXECUTION": 0.0,
+          "ARITHMETIC": 0.0,
+          "FORMAT": 1.0,
+          "BUDGET": 0.0
+        },
+        "dominant_bucket": "FORMAT",
+        "success_count": 0,
+        "per_family": {
+          "chart_agg": {
+            "FORMAT": 4
+          },
+          "doc_table": {
+            "FORMAT": 4
+          },
+          "screenshot_ui": {
+            "FORMAT": 4
+          },
+          "multi_frame": {
+            "FORMAT": 4
+          }
+        }
+      },
+      "sft": {
+        "n_rollouts": 16,
+        "n_failed": 16,
+        "failure_rate": 1.0,
+        "counts": {
+          "PERCEPTION": 6,
+          "PLANNING": 0,
+          "TOOL_SCHEMA": 0,
+          "EXECUTION": 1,
+          "ARITHMETIC": 0,
+          "FORMAT": 9,
+          "BUDGET": 0
+        },
+        "rates": {
+          "PERCEPTION": 0.375,
+          "PLANNING": 0.0,
+          "TOOL_SCHEMA": 0.0,
+          "EXECUTION": 0.0625,
+          "ARITHMETIC": 0.0,
+          "FORMAT": 0.5625,
+          "BUDGET": 0.0
+        },
+        "dominant_bucket": "FORMAT",
+        "success_count": 0,
+        "per_family": {
+          "chart_agg": {
+            "PERCEPTION": 3,
+            "FORMAT": 1
+          },
+          "doc_table": {
+            "PERCEPTION": 3,
+            "FORMAT": 1
+          },
+          "screenshot_ui": {
+            "FORMAT": 4
+          },
+          "multi_frame": {
+            "FORMAT": 3,
+            "EXECUTION": 1
+          }
+        }
+      },
+      "grpo": {
+        "n_rollouts": 16,
+        "n_failed": 16,
+        "failure_rate": 1.0,
+        "counts": {
+          "PERCEPTION": 5,
+          "PLANNING": 0,
+          "TOOL_SCHEMA": 1,
+          "EXECUTION": 1,
+          "ARITHMETIC": 0,
+          "FORMAT": 9,
+          "BUDGET": 0
+        },
+        "rates": {
+          "PERCEPTION": 0.3125,
+          "PLANNING": 0.0,
+          "TOOL_SCHEMA": 0.0625,
+          "EXECUTION": 0.0625,
+          "ARITHMETIC": 0.0,
+          "FORMAT": 0.5625,
+          "BUDGET": 0.0
+        },
+        "dominant_bucket": "FORMAT",
+        "success_count": 0,
+        "per_family": {
+          "chart_agg": {
+            "FORMAT": 2,
+            "PERCEPTION": 2
+          },
+          "doc_table": {
+            "EXECUTION": 1,
+            "FORMAT": 1,
+            "PERCEPTION": 2
+          },
+          "screenshot_ui": {
+            "PERCEPTION": 1,
+            "FORMAT": 3
+          },
+          "multi_frame": {
+            "FORMAT": 3,
+            "TOOL_SCHEMA": 1
+          }
+        }
+      }
+    }
+  },
+  "failure_mix_summary": {
+    "base_dominant": "FORMAT",
+    "grpo_dominant": "FORMAT",
+    "count_changes": {
+      "PERCEPTION": 4,
+      "PLANNING": 1,
+      "TOOL_SCHEMA": 1,
+      "EXECUTION": 0,
+      "ARITHMETIC": 0,
+      "FORMAT": -11,
+      "BUDGET": 5
+    }
+  }
+}

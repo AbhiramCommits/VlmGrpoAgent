@@ -1,0 +1,258 @@
+{
+  "test": {
+    "base": {
+      "n_rollouts": 16,
+      "n_failed": 16,
+      "failure_rate": 1.0,
+      "counts": {
+        "PERCEPTION": 0,
+        "PLANNING": 0,
+        "TOOL_SCHEMA": 0,
+        "EXECUTION": 0,
+        "ARITHMETIC": 0,
+        "FORMAT": 16,
+        "BUDGET": 0
+      },
+      "rates": {
+        "PERCEPTION": 0.0,
+        "PLANNING": 0.0,
+        "TOOL_SCHEMA": 0.0,
+        "EXECUTION": 0.0,
+        "ARITHMETIC": 0.0,
+        "FORMAT": 1.0,
+        "BUDGET": 0.0
+      },
+      "dominant_bucket": "FORMAT",
+      "success_count": 0,
+      "per_family": {
+        "chart_agg": {
+          "FORMAT": 4
+        },
+        "doc_table": {
+          "FORMAT": 4
+        },
+        "screenshot_ui": {
+          "FORMAT": 4
+        },
+        "multi_frame": {
+          "FORMAT": 4
+        }
+      }
+    },
+    "sft": {
+      "n_rollouts": 16,
+      "n_failed": 16,
+      "failure_rate": 1.0,
+      "counts": {
+        "PERCEPTION": 3,
+        "PLANNING": 1,
+        "TOOL_SCHEMA": 0,
+        "EXECUTION": 0,
+        "ARITHMETIC": 0,
+        "FORMAT": 7,
+        "BUDGET": 5
+      },
+      "rates": {
+        "PERCEPTION": 0.1875,
+        "PLANNING": 0.0625,
+        "TOOL_SCHEMA": 0.0,
+        "EXECUTION": 0.0,
+        "ARITHMETIC": 0.0,
+        "FORMAT": 0.4375,
+        "BUDGET": 0.3125
+      },
+      "dominant_bucket": "FORMAT",
+      "success_count": 0,
+      "per_family": {
+        "chart_agg": {
+          "PERCEPTION": 1,
+          "FORMAT": 3
+        },
+        "doc_table": {
+          "BUDGET": 1,
+          "PLANNING": 1,
+          "PERCEPTION": 1,
+          "FORMAT": 1
+        },
+        "screenshot_ui": {
+          "FORMAT": 3,
+          "PERCEPTION": 1
+        },
+        "multi_frame": {
+          "BUDGET": 4
+        }
+      }
+    },
+    "grpo": {
+      "n_rollouts": 16,
+      "n_failed": 16,
+      "failure_rate": 1.0,
+      "counts": {
+        "PERCEPTION": 4,
+        "PLANNING": 1,
+        "TOOL_SCHEMA": 1,
+        "EXECUTION": 0,
+        "ARITHMETIC": 0,
+        "FORMAT": 5,
+        "BUDGET": 5
+      },
+      "rates": {
+        "PERCEPTION": 0.25,
+        "PLANNING": 0.0625,
+        "TOOL_SCHEMA": 0.0625,
+        "EXECUTION": 0.0,
+        "ARITHMETIC": 0.0,
+        "FORMAT": 0.3125,
+        "BUDGET": 0.3125
+      },
+      "dominant_bucket": "FORMAT",
+      "success_count": 0,
+      "per_family": {
+        "chart_agg": {
+          "PERCEPTION": 2,
+          "FORMAT": 2
+        },
+        "doc_table": {
+          "BUDGET": 1,
+          "PLANNING": 1,
+          "PERCEPTION": 1,
+          "TOOL_SCHEMA": 1
+        },
+        "screenshot_ui": {
+          "FORMAT": 3,
+          "PERCEPTION": 1
+        },
+        "multi_frame": {
+          "BUDGET": 4
+        }
+      }
+    }
+  },
+  "test_hard": {
+    "base": {
+      "n_rollouts": 16,
+      "n_failed": 16,
+      "failure_rate": 1.0,
+      "counts": {
+        "PERCEPTION": 0,
+        "PLANNING": 0,
+        "TOOL_SCHEMA": 0,
+        "EXECUTION": 0,
+        "ARITHMETIC": 0,
+        "FORMAT": 16,
+        "BUDGET": 0
+      },
+      "rates": {
+        "PERCEPTION": 0.0,
+        "PLANNING": 0.0,
+        "TOOL_SCHEMA": 0.0,
+        "EXECUTION": 0.0,
+        "ARITHMETIC": 0.0,
+        "FORMAT": 1.0,
+        "BUDGET": 0.0
+      },
+      "dominant_bucket": "FORMAT",
+      "success_count": 0,
+      "per_family": {
+        "chart_agg": {
+          "FORMAT": 4
+        },
+        "doc_table": {
+          "FORMAT": 4
+        },
+        "screenshot_ui": {
+          "FORMAT": 4
+        },
+        "multi_frame": {
+          "FORMAT": 4
+        }
+      }
+    },
+    "sft": {
+      "n_rollouts": 16,
+      "n_failed": 16,
+      "failure_rate": 1.0,
+      "counts": {
+        "PERCEPTION": 6,
+        "PLANNING": 0,
+        "TOOL_SCHEMA": 0,
+        "EXECUTION": 1,
+        "ARITHMETIC": 0,
+        "FORMAT": 9,
+        "BUDGET": 0
+      },
+      "rates": {
+        "PERCEPTION": 0.375,
+        "PLANNING": 0.0,
+        "TOOL_SCHEMA": 0.0,
+        "EXECUTION": 0.0625,
+        "ARITHMETIC": 0.0,
+        "FORMAT": 0.5625,
+        "BUDGET": 0.0
+      },
+      "dominant_bucket": "FORMAT",
+      "success_count": 0,
+      "per_family": {
+        "chart_agg": {
+          "PERCEPTION": 3,
+          "FORMAT": 1
+        },
+        "doc_table": {
+          "PERCEPTION": 3,
+          "FORMAT": 1
+        },
+        "screenshot_ui": {
+          "FORMAT": 4
+        },
+        "multi_frame": {
+          "FORMAT": 3,
+          "EXECUTION": 1
+        }
+      }
+    },
+    "grpo": {
+      "n_rollouts": 16,
+      "n_failed": 16,
+      "failure_rate": 1.0,
+      "counts": {
+        "PERCEPTION": 5,
+        "PLANNING": 0,
+        "TOOL_SCHEMA": 1,
+        "EXECUTION": 1,
+        "ARITHMETIC": 0,
+        "FORMAT": 9,
+        "BUDGET": 0
+      },
+      "rates": {
+        "PERCEPTION": 0.3125,
+        "PLANNING": 0.0,
+        "TOOL_SCHEMA": 0.0625,
+        "EXECUTION": 0.0625,
+        "ARITHMETIC": 0.0,
+        "FORMAT": 0.5625,
+        "BUDGET": 0.0
+      },
+      "dominant_bucket": "FORMAT",
+      "success_count": 0,
+      "per_family": {
+        "chart_agg": {
+          "FORMAT": 2,
+          "PERCEPTION": 2
+        },
+        "doc_table": {
+          "EXECUTION": 1,
+          "FORMAT": 1,
+          "PERCEPTION": 2
+        },
+        "screenshot_ui": {
+          "PERCEPTION": 1,
+          "FORMAT": 3
+        },
+        "multi_frame": {
+          "FORMAT": 3,
+          "TOOL_SCHEMA": 1
+        }
+      }
+    }
+  }
+}

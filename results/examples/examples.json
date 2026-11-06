@@ -1,0 +1,66 @@
+[
+  {
+    "bucket": "PERCEPTION",
+    "task_id": "test-chart_agg-0000-1234",
+    "family": "chart_agg",
+    "question": "The bar chart shows orders shipped per day. What is the mean of the three lowest bars? Round to 2 decimals.",
+    "gold_answer": "16.00",
+    "pred_answer": "44.0",
+    "turns": [
+      {
+        "turn": 0,
+        "raw_text": "<think>I will use the formula: <think>;</think>\n<tool>(19,22,22,18,18,18)</tool>\n<answer>44.0</answer>\n<think>The value is 44.0</think>\n<source>",
+        "action_type": "answer",
+        "tool_name": null,
+        "tool_args": null,
+        "schema_valid": false,
+        "tool_ok": null,
+        "tool_stdout": "",
+        "tool_error": "",
+        "observation": "",
+        "gen_seconds": 10.311,
+        "tool_seconds": 0.0
+      }
+    ],
+    "annotation": "Perception failure: the trajectory never surfaced the visual facts ['bar:Sun', 'bar:Fri', 'bar:Wed', 'bar:Sat']; no downstream arithmetic could be right."
+  },
+  {
+    "bucket": "PLANNING",
+    "task_id": "test-doc_table-0000-11234",
+    "family": "doc_table",
+    "question": "The image is a vendor invoice table. What is the total amount (qty * unit price) for rows where region is North and qty is at least 3? Round to 2 decimals.",
+    "gold_answer": "344.97",
+    "pred_answer": "5.00",
+    "turns": [
+      {
+        "turn": 0,
+        "raw_text": "<think>I will use Python to compute the aggregate exactly.</think>\n<tool>{\"name\": \"python_exec\", \"args\": {\"code\": \"q = [3, 5, 3, 6, 3, 5, 10, 15, 15, 2, 2, 6, 5, 3, 3, 5, 3, 5, 4",
+        "action_type": "none",
+        "tool_name": null,
+        "tool_args": null,
+        "schema_valid": false,
+        "tool_ok": null,
+        "tool_stdout": "",
+        "tool_error": "",
+        "observation": "",
+        "gen_seconds": 10.0639,
+        "tool_seconds": 0.0
+      },
+      {
+        "turn": 1,
+        "raw_text": "<think>I will use Python to compute the aggregate exactly.</think>\n<answer>5.00</answer>",
+        "action_type": "answer",
+        "tool_name": null,
+        "tool_args": null,
+        "schema_valid": false,
+        "tool_ok": null,
+        "tool_stdout": "",
+        "tool_error": "",
+        "observation": "",
+        "gen_seconds": 9.0176,
+        "tool_seconds": 0.0
+      }
+    ],
+    "annotation": "Planning failure: facts were surfaced but the required tool sequence ['python_exec'] was not executed in a feasible order."
+  }
+]

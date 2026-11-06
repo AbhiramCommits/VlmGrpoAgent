@@ -3,54 +3,54 @@
   "checkpoint_path": null,
   "split": "test_hard",
   "k": 4,
-  "n_items": 8,
-  "n_rollouts": 32,
+  "n_items": 4,
+  "n_rollouts": 16,
   "pass@1": 0.0,
   "pass@k": 0.0,
   "task_completion_rate": 0.0,
   "tool_call_schema_validity": 0.0,
   "tool_call_schema_validity_rollout_mean": 0.0,
-  "mean_turns": 3.8438,
-  "perception_recall": 0.2619,
+  "mean_turns": 4.0,
+  "perception_recall": 0.0633,
   "tool_trace_rate": 0.0,
-  "format_rate": 0.0312,
-  "mean_reward": -0.0053,
+  "format_rate": 0.0,
+  "mean_reward": -0.0083,
   "per_family": {
     "chart_agg": {
-      "n_items": 2,
-      "n_rollouts": 8,
+      "n_items": 1,
+      "n_rollouts": 4,
       "pass@1": 0.0,
       "task_completion_rate": 0.0,
       "tool_call_schema_validity": 0.0,
-      "mean_turns": 3.75,
-      "perception_recall": 0.0893
+      "mean_turns": 4.0,
+      "perception_recall": 0.1072
     },
     "doc_table": {
-      "n_items": 2,
-      "n_rollouts": 8,
+      "n_items": 1,
+      "n_rollouts": 4,
       "pass@1": 0.0,
       "task_completion_rate": 0.0,
       "tool_call_schema_validity": 0.0,
-      "mean_turns": 3.625,
-      "perception_recall": 0.3958
+      "mean_turns": 4.0,
+      "perception_recall": 0.0833
     },
     "screenshot_ui": {
-      "n_items": 2,
-      "n_rollouts": 8,
+      "n_items": 1,
+      "n_rollouts": 4,
       "pass@1": 0.0,
       "task_completion_rate": 0.0,
       "tool_call_schema_validity": 0.0,
       "mean_turns": 4.0,
-      "perception_recall": 0.1562
+      "perception_recall": 0.0625
     },
     "multi_frame": {
-      "n_items": 2,
-      "n_rollouts": 8,
+      "n_items": 1,
+      "n_rollouts": 4,
       "pass@1": 0.0,
       "task_completion_rate": 0.0,
       "tool_call_schema_validity": 0.0,
       "mean_turns": 4.0,
-      "perception_recall": 0.4062
+      "perception_recall": 0.0
     }
   },
   "environment": {
@@ -60,11 +60,11 @@
     "dtype": "float32",
     "backend": "hf",
     "rollout_backend_requested": "hf",
-    "commit_sha": "f38b400",
+    "commit_sha": "92d1644",
     "model_params": 256484928,
-    "load_seconds": 9.72,
-    "eval_wall_clock_sec": 358.72,
-    "eval_wall_clock_hours": 0.0996,
-    "timestamp": 1793960905
+    "load_seconds": 9.03,
+    "eval_wall_clock_sec": 489.49,
+    "eval_wall_clock_hours": 0.136,
+    "timestamp": 1793970897
   }
 }
