@@ -1,0 +1,85 @@
+# CI config: pure stub tier, no network, no weights, everything in < 3 minutes.
+run_id: ci
+seed: 7
+model_tier: stub
+device: cpu
+dtype: float32
+
+task:
+  seed: 7
+  train_n: 8
+  val_n: 4
+  test_n: 4
+  test_hard_n: 4
+  image_size: 224
+  image_dir: data/images_ci
+
+rollout:
+  max_turns: 3
+  max_new_tokens: 32
+  temperature: 0.9
+  top_p: 0.95
+  do_sample: true
+  backend: hf
+  batch_size: 4
+  tool_timeout: 2.0
+
+sft:
+  lora_r: 8
+  lora_alpha: 16
+  lora_dropout: 0.0
+  lr: 0.001
+  epochs: 1
+  batch_size: 2
+  grad_accum: 1
+  max_length: 384
+  warmup_ratio: 0.0
+  max_steps: 1
+  full_params: false
+  val_every: 1
+  val_items: 2
+
+grpo:
+  group_size: 4
+  steps: 2
+  lr: 0.0001
+  temperature: 1.0
+  clip_eps: 0.2
+  kl_beta: 0.02
+  kl_kind: k3
+  last_turn_only: false
+  prompts_per_step: 1
+  max_length: 512
+  max_new_tokens: 32
+  max_turns: 2
+  val_every: 1
+  val_items: 2
+  eval_k: 1
+  skip_zero_variance: false
+  rollout_backend: hf
+
+eval:
+  k: 1
+  max_items: 4
+  temperature: 1.0
+  max_turns: 2
+  max_new_tokens: 32
+  batch_size: 4
+  split: test
+
+reward:
+  w_answer: 1.0
+  w_tool: 0.2
+  w_trace: 0.3
+  w_format: 0.1
+  w_length: 0.05
+  length_budget: 512
+
+tracking:
+  project: vlm-grpo-ci
+  use_wandb: never
+  log_every: 1
+
+data_dir: data/ci
+results_dir: results/ci
+runs_dir: runs/ci

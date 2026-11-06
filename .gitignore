@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+
+# Experiments
+runs/
+wandb/
+*.pt
+*.pth
+*.ckpt
+data/images/
+results/trajectories/
+results/ci/
+
+# Tooling
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.DS_Store

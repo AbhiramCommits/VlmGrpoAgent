@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "vlmgrpo"
+version = "0.1.0"
+description = "Verifiable-reward GRPO for multimodal tool-using agents"
+requires-python = ">=3.10"
+readme = "README.md"
+
+[tool.setuptools.packages.find]
+include = ["vlmgrpo*"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py310"
+extend-exclude = ["runs", "results", "data", ".venv"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W", "UP", "B"]
+ignore = ["E501", "B008", "UP007", "UP038", "B905"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+markers = [
+    "slow: end-to-end tests that take more than a few seconds",
+]

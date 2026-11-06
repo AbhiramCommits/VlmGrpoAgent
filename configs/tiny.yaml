@@ -1,0 +1,88 @@
+# Tiny tier: SmolVLM-256M-Instruct on CPU/MPS.  This is the config used for
+# the committed results on the build machine (Apple M3, MPS, 16 GB).
+run_id: tiny-main
+seed: 1234
+model_tier: auto          # auto -> tiny when no CUDA is present
+device: auto              # auto -> cuda | mps | cpu
+dtype: auto               # auto -> float32 on mps/cpu, bf16/fp16 on cuda
+
+task:
+  seed: 1234
+  train_n: 160
+  val_n: 40
+  test_n: 40
+  test_hard_n: 40
+  image_size: 448
+  image_dir: data/images
+
+rollout:
+  max_turns: 4
+  max_new_tokens: 160
+  temperature: 0.7
+  top_p: 0.95
+  do_sample: true
+  backend: hf
+  batch_size: 8
+  tool_timeout: 2.0
+
+sft:
+  lora_r: 16
+  lora_alpha: 32
+  lora_dropout: 0.05
+  lr: 0.0001
+  epochs: 3
+  batch_size: 4
+  grad_accum: 2
+  max_length: 1024
+  warmup_ratio: 0.05
+  max_steps: -1
+  full_params: false
+  val_every: 25
+  val_items: 8
+
+grpo:
+  group_size: 8
+  steps: 40
+  lr: 0.00001
+  temperature: 0.9
+  top_p: 0.95
+  clip_eps: 0.2
+  kl_beta: 0.02
+  kl_kind: k3
+  last_turn_only: false
+  prompts_per_step: 1
+  max_length: 1280
+  max_new_tokens: 160
+  max_turns: 4
+  val_every: 10
+  val_items: 6
+  eval_k: 1
+  skip_zero_variance: true
+  seed: 0
+  rollout_backend: hf
+
+eval:
+  k: 4
+  max_items: 24
+  temperature: 0.8
+  max_turns: 4
+  max_new_tokens: 160
+  batch_size: 8
+  split: test
+
+reward:
+  w_answer: 1.0
+  w_tool: 0.2
+  w_trace: 0.3
+  w_format: 0.1
+  w_length: 0.05
+  length_budget: 1600
+
+tracking:
+  project: vlm-grpo
+  use_wandb: auto
+  log_every: 1
+
+data_dir: data
+results_dir: results
+runs_dir: runs
