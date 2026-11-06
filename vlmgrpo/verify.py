@@ -32,7 +32,7 @@ def extract_number(text: Any) -> float | None:
         return None
     if isinstance(text, (int, float)) and not isinstance(text, bool):
         return float(text)
-    matches = _NUM_RE.findall(str(text).replace("$", " ").replace("%", " "))
+    matches = _NUM_RE.findall(str(text).replace("$", "").replace("%", ""))
     if not matches:
         return None
     try:
@@ -165,7 +165,7 @@ def _fact_present(value: Any, text: str, text_lower: str) -> bool:
         else:
             variants = [str(value), f"{fval:.2f}", f"{fval:.4f}"]
         for v in variants:
-            pattern = r"(?<![\d.])" + re.escape(v) + r"(?![\d])"
+            pattern = r"(?<![\d.])" + re.escape(v) + r"(?![\d]|\.\d)"
             if re.search(pattern, text):
                 return True
         return False

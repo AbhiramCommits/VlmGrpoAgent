@@ -2,8 +2,8 @@
 """Smoke test: render a task, run one stub rollout, print everything.
 
 Runs fully offline on CPU in a few seconds.  Exit code 0 and ``SMOKE OK`` mean
-the package, config, model registry, task suite, processor API and generation
-loop agree end to end.
+the package, config, model registry, task suite, agent loop, tool sandbox and
+processor API all agree end to end.
 """
 
 from __future__ import annotations
@@ -11,27 +11,29 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+from dataclasses import replace
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
+from vlmgrpo.agent import run_episode  # noqa: E402
 from vlmgrpo.config import load_config  # noqa: E402
-from vlmgrpo.prompts import build_messages, format_prompt  # noqa: E402
 from vlmgrpo.registry import build_stub_vlm, detect_device, model_info, pick_model_tier  # noqa: E402
-from vlmgrpo.tasks.families import FAMILIES, generate_task  # noqa: E402
+from vlmgrpo.tasks.families import FAMILIES, TaskItem, generate_task  # noqa: E402
 from vlmgrpo.utils import count_params, seed_everything  # noqa: E402
 
 
-def pick_smoke_task(cfg) -> dict:
+def pick_smoke_task(cfg) -> TaskItem:
     """Use the committed test split when available, otherwise render one chart task."""
     test_path = Path(cfg.data_dir) / "test.jsonl"
     if test_path.exists():
         rows = [json.loads(line) for line in test_path.read_text().splitlines() if line.strip()]
         for row in rows:
             if row["family"] == "chart_agg":
-                return row
-    item = generate_task("chart_agg", 1234, "test", 0, Path(cfg.data_dir) / "smoke")
-    return item.to_dict()
+                item = TaskItem.from_dict(row)
+                if Path(item.image_paths[0]).exists():
+                    return item
+    return generate_task("chart_agg", 1234, "test", 0, Path(cfg.data_dir) / "smoke")
 
 
 def main() -> int:
@@ -51,34 +53,21 @@ def main() -> int:
     print(f"families={list(FAMILIES)}")
 
     task = pick_smoke_task(cfg)
-    image_path = task["image_paths"][0]
-    if not Path(image_path).exists():
-        image_path = str(Path(cfg.data_dir) / "smoke" / Path(image_path).name)
-    from PIL import Image
-
-    image = Image.open(image_path).convert("RGB")
-
-    messages = build_messages(task["question"])
-    prompt = format_prompt(processor, messages)
-    inputs = processor(text=[prompt], images=[image], return_tensors="pt", padding=True)
-
-    out = model.generate(
-        **inputs,
-        max_new_tokens=32,
-        do_sample=True,
-        temperature=0.9,
-        pad_token_id=processor.tokenizer.pad_token_id,
-        eos_token_id=processor.tokenizer.eos_token_id,
+    smoke_cfg = replace(
+        cfg,
+        rollout=replace(cfg.rollout, max_turns=2, max_new_tokens=24, batch_size=1),
+        model_tier="stub",
     )
-    new_tokens = out[0, inputs["input_ids"].shape[1] :]
-    raw = processor.tokenizer.decode(new_tokens, skip_special_tokens=True)
+    traj = run_episode(model, processor, task, smoke_cfg, tier="stub", device="cpu")
 
     print("\n=== RENDERED TASK PROMPT ===")
-    print(prompt)
-    print(f"\n=== TASK ===\nfamily={task['family']} gold_answer={task['gold_answer']} "
-          f"required_tools={task['required_tools']}")
-    print("\n=== STUB MODEL RAW OUTPUT ===")
-    print(raw)
+    print(traj.prompt)
+    print(f"\n=== TASK ===\nfamily={task.family} gold_answer={task.gold_answer} "
+          f"required_tools={task.required_tools}")
+    print("\n=== STUB MODEL RAW OUTPUT (turn 1) ===")
+    print(traj.turns[0].raw_text if traj.turns else "<none>")
+    print(f"\n=== TRAJECTORY ===\nturns={traj.n_turns} stopped={traj.stopped_reason} "
+          f"pred_answer={traj.pred_answer!r} tool_calls={len(traj.tool_calls)}")
     print("\nSMOKE OK")
     return 0
 

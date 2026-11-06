@@ -220,6 +220,7 @@ def python_exec(code: str, timeout: float = 2.0) -> dict[str, Any]:
             "http_proxy": "",
             "https_proxy": "",
             "NO_PROXY": "*",
+            "TOKENIZERS_PARALLELISM": "false",
         }
         try:
             proc = subprocess.run(
@@ -241,7 +242,7 @@ def python_exec(code: str, timeout: float = 2.0) -> dict[str, Any]:
 
 
 def _tokens(text: str) -> set[str]:
-    return {t for t in re.findall(r"[a-zA-Z0-9_.]+", str(text).lower()) if len(t) > 1}
+    return {t for t in re.findall(r"[a-zA-Z0-9.]+", str(text).lower()) if len(t) > 1}
 
 
 def retrieve(query: str, corpus: dict[str, str]) -> dict[str, Any]:

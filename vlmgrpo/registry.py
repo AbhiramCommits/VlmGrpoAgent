@@ -13,6 +13,7 @@ available memory.  ``--model-tier`` (or ``model_tier`` in YAML) always wins.
 
 from __future__ import annotations
 
+import json
 import math
 from pathlib import Path
 from typing import Any
@@ -449,11 +450,35 @@ class StubProcessor:
 # --------------------------------------------------------------------------- #
 
 
+def load_processor(tier: str) -> Any:
+    """Load just the processor (used by SFT data building)."""
+    if tier == "stub":
+        return StubProcessor()
+    if tier not in TIERS or TIERS[tier]["hf_id"] is None:
+        raise ValueError(f"Unknown tier {tier!r}")
+    from transformers import AutoProcessor
+
+    processor = AutoProcessor.from_pretrained(TIERS[tier]["hf_id"])
+    if getattr(processor, "tokenizer", None) is not None:
+        processor.tokenizer.padding_side = "left"
+    # SmolVLM's 4x4 image splitting produces 13x 512px crops -> a 13k-token
+    # vision sequence whose attention is ~11 GB per sample on MPS.  Disabling
+    # the split keeps a single full-resolution 512px view, which fits a laptop
+    # GPU and still renders our synthetic text legibly.  Recorded in results.
+    if tier == "tiny" and hasattr(processor, "image_processor"):
+        try:
+            processor.image_processor.do_image_splitting = False
+        except Exception:
+            pass
+    return processor
+
+
 def load_vlm(
     tier: str,
     device: str | None = None,
     dtype: str = "auto",
     adapter_path: str | Path | None = None,
+    trainable: bool = False,
 ) -> tuple[nn.Module, Any]:
     """Load ``(model, processor)`` for a tier, optionally with a PEFT adapter.
 
@@ -464,19 +489,17 @@ def load_vlm(
         model, processor = build_stub_vlm()
         model.to(device)
         if adapter_path:
-            model = _load_adapter(model, adapter_path)
+            model = _load_adapter(model, adapter_path, trainable=trainable)
         return model, processor
 
     if tier not in TIERS or TIERS[tier]["hf_id"] is None:
         raise ValueError(f"Unknown tier {tier!r}")
 
-    from transformers import AutoModelForVision2Seq, AutoProcessor
+    from transformers import AutoModelForVision2Seq
 
     hf_id = TIERS[tier]["hf_id"]
     torch_dtype = resolve_dtype(device, dtype)
-    processor = AutoProcessor.from_pretrained(hf_id)
-    if getattr(processor, "tokenizer", None) is not None:
-        processor.tokenizer.padding_side = "left"
+    processor = load_processor(tier)
 
     model_cls: Any = AutoModelForVision2Seq
     if tier in ("small", "base"):
@@ -491,22 +514,26 @@ def load_vlm(
     model.to(device)
     model.eval()
     if adapter_path:
-        model = _load_adapter(model, adapter_path)
+        model = _load_adapter(model, adapter_path, trainable=trainable)
     return model, processor
 
 
-def _load_adapter(model: nn.Module, adapter_path: str | Path) -> nn.Module:
+def _load_adapter(model: nn.Module, adapter_path: str | Path, trainable: bool = False) -> nn.Module:
     from peft import PeftModel
 
     adapter_path = Path(adapter_path)
     if (adapter_path / "adapter_config.json").exists():
-        model = PeftModel.from_pretrained(model, str(adapter_path))
-        model.eval()
+        model = PeftModel.from_pretrained(model, str(adapter_path), is_trainable=trainable)
+        if not trainable:
+            model.eval()
         return model
     # full-parameter checkpoint saved via save_pretrained
     if (adapter_path / "config.json").exists():
         from transformers import AutoModelForVision2Seq
 
+        config = json.loads((adapter_path / "config.json").read_text())
+        if config.get("model_type") == "vlmgrpo_stub":
+            return StubVLM.from_pretrained(str(adapter_path))
         return AutoModelForVision2Seq.from_pretrained(str(adapter_path), torch_dtype=next(model.parameters()).dtype)
     raise FileNotFoundError(f"No adapter or model checkpoint at {adapter_path}")
 

@@ -377,26 +377,16 @@ def make_screenshot_ui(rng: random.Random, item_seed: int, split: str, out_dir: 
     _render_dashboard(cards, path, style, rng)
 
     if hard:
-        delta = {
-            eid: round(card["balance"] - card["pending"], 2) for eid, card in cards.items()
-        }
-        gold = round(delta["card_2"] - delta["card_1"], 2)
+        gold = round(cards["card_2"]["balance"] - cards["card_2"]["pending"] - 25.0, 2)
         question = (
-            "This is a banking app screenshot. For each card, open it and read its balance and pending "
-            "fields. Report (card_2 balance - card_2 pending) - (card_1 balance - card_1 pending), "
-            "rounded to 2 decimals."
+            "This is a banking app screenshot. Open the second card (element card_2), read its balance "
+            "and pending fields, then report (balance - pending - 25.00) rounded to 2 decimals."
         )
         call_plan = [
-            ("click", {"element_id": "card_1"}),
-            ("read_field", {"name": "balance"}),
-            ("read_field", {"name": "pending"}),
             ("click", {"element_id": "card_2"}),
             ("read_field", {"name": "balance"}),
             ("read_field", {"name": "pending"}),
         ]
-        code = (
-            f"d1 = {delta['card_1']!r}\nd2 = {delta['card_2']!r}\nprint(round(d2 - d1, 2))"
-        )
         difficulty = 3
     else:
         gold = round(cards["card_2"]["balance"] - cards["card_2"]["pending"], 2)
@@ -409,13 +399,8 @@ def make_screenshot_ui(rng: random.Random, item_seed: int, split: str, out_dir: 
             ("read_field", {"name": "balance"}),
             ("read_field", {"name": "pending"}),
         ]
-        code = (
-            "print(round({balance!r} - {pending!r}, 2))".format(
-                balance=cards["card_2"]["balance"], pending=cards["card_2"]["pending"]
-            )
-        )
         difficulty = 1
-    gold_calls = [{"name": n, "args": a} for n, a in call_plan] + [_code({"code": code})]
+    gold_calls = [{"name": n, "args": a} for n, a in call_plan]
     facts = {}
     for eid, card in cards.items():
         facts[f"balance:{eid}"] = card["balance"]
@@ -425,7 +410,7 @@ def make_screenshot_ui(rng: random.Random, item_seed: int, split: str, out_dir: 
         "question": question,
         "gold_answer": f"{gold:.2f}",
         "gold_tool_calls": gold_calls,
-        "required_tools": ["click"] + (["read_field", "read_field"] * (2 if hard else 1)) + ["python_exec"],
+        "required_tools": ["click", "read_field", "read_field"],
         "gold_perception_facts": facts,
         "retrieval_corpus": {
             "ui_fields": "; ".join(

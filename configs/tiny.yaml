@@ -42,7 +42,7 @@ sft:
 
 grpo:
   group_size: 8
-  steps: 40
+  steps: 16
   lr: 0.00001
   temperature: 0.9
   top_p: 0.95
@@ -52,9 +52,9 @@ grpo:
   last_turn_only: false
   prompts_per_step: 1
   max_length: 1280
-  max_new_tokens: 160
+  max_new_tokens: 64
   max_turns: 4
-  val_every: 10
+  val_every: 4
   val_items: 6
   eval_k: 1
   skip_zero_variance: true
@@ -63,10 +63,10 @@ grpo:
 
 eval:
   k: 4
-  max_items: 24
+  max_items: 8
   temperature: 0.8
   max_turns: 4
-  max_new_tokens: 160
+  max_new_tokens: 64
   batch_size: 8
   split: test
 

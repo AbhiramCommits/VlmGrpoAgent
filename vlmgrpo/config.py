@@ -7,7 +7,7 @@ run on a laptop; scale up in the YAML rather than in code.
 
 from __future__ import annotations
 
-from dataclasses import asdict, dataclass, field, fields, is_dataclass
+from dataclasses import asdict, dataclass, field, fields
 from pathlib import Path
 from typing import Any
 
@@ -168,16 +168,24 @@ def _coerce(section_cls: type, payload: Any) -> Any:
 
 def run_config_from_dict(payload: dict[str, Any]) -> RunConfig:
     payload = dict(payload or {})
-    section_names = {f.name for f in fields(RunConfig) if is_dataclass(getattr(RunConfig, f.name, None))}
-    sections: dict[str, Any] = {}
-    for name in list(payload):
-        if name in section_names:
-            sections[name] = payload.pop(name)
+    sections = {
+        "task": TaskConfig,
+        "rollout": RolloutConfig,
+        "sft": SFTConfig,
+        "grpo": GRPOConfig,
+        "eval": EvalConfig,
+        "reward": RewardConfig,
+        "tracking": TrackingConfig,
+    }
+    parsed: dict[str, Any] = {}
+    for name, cls in sections.items():
+        if name in payload:
+            parsed[name] = _coerce(cls, payload.pop(name))
     known = {f.name for f in fields(RunConfig)}
     unknown = set(payload) - known
     if unknown:
         raise ValueError(f"Unknown top-level config keys: {sorted(unknown)}")
-    return RunConfig(**payload, **{k: _coerce(type(getattr(RunConfig, k, None) or RunConfig.__dataclass_fields__[k].default_factory()), v) for k, v in sections.items()})
+    return RunConfig(**payload, **parsed)
 
 
 def load_config(path: str | Path) -> RunConfig:

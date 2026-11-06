@@ -165,3 +165,49 @@ def count_params(model: Any, trainable_only: bool = False) -> int:
 
 def human_hours(seconds: float) -> float:
     return round(seconds / 3600.0, 4)
+
+
+def encode_text(tokenizer: Any, text: str) -> list[int]:
+    """Tokenize one string with an HF tokenizer or the stub char tokenizer."""
+    ids = tokenizer(text, add_special_tokens=False)["input_ids"]
+    if ids and isinstance(ids[0], (list, tuple)):
+        ids = ids[0]
+    return list(ids)
+
+
+# --------------------------------------------------------------------------- #
+# Checkpoint registry (runs/checkpoints.json)
+# --------------------------------------------------------------------------- #
+
+
+def register_checkpoint(
+    runs_dir: str | Path, name: str, path: str | Path, meta: dict[str, Any] | None = None
+) -> Path:
+    """Record ``name -> path`` so evaluation can resolve ``sft`` / ``grpo``."""
+    manifest_path = Path(runs_dir) / "checkpoints.json"
+    manifest = read_json(manifest_path) if manifest_path.exists() else {}
+    manifest[name] = {"path": str(path), "meta": json_safe(meta or {})}
+    write_json(manifest_path, manifest)
+    return manifest_path
+
+
+def read_checkpoints(runs_dir: str | Path) -> dict[str, Any]:
+    manifest_path = Path(runs_dir) / "checkpoints.json"
+    return read_json(manifest_path) if manifest_path.exists() else {}
+
+
+def resolve_checkpoint(runs_dir: str | Path, name: str | None) -> Path | None:
+    """Resolve a checkpoint name to a directory, or ``None`` for BASE."""
+    if not name or name == "base":
+        return None
+    candidate = Path(name)
+    if candidate.exists() and candidate.is_dir():
+        return candidate
+    manifest = read_checkpoints(runs_dir)
+    if name in manifest:
+        path = Path(manifest[name]["path"])
+        if path.exists():
+            return path
+        print(f"[checkpoints] registered path for {name!r} does not exist: {path}")
+        return None
+    return None

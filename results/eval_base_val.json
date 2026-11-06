@@ -1,0 +1,70 @@
+{
+  "checkpoint": "base",
+  "checkpoint_path": null,
+  "split": "val",
+  "k": 4,
+  "n_items": 8,
+  "n_rollouts": 32,
+  "pass@1": 0.0,
+  "pass@k": 0.0,
+  "task_completion_rate": 0.0,
+  "tool_call_schema_validity": 0.0,
+  "tool_call_schema_validity_rollout_mean": 0.0,
+  "mean_turns": 4.0,
+  "perception_recall": 0.2052,
+  "tool_trace_rate": 0.0,
+  "format_rate": 0.0,
+  "mean_reward": -0.0087,
+  "per_family": {
+    "chart_agg": {
+      "n_items": 2,
+      "n_rollouts": 8,
+      "pass@1": 0.0,
+      "task_completion_rate": 0.0,
+      "tool_call_schema_validity": 0.0,
+      "mean_turns": 4.0,
+      "perception_recall": 0.2167
+    },
+    "doc_table": {
+      "n_items": 2,
+      "n_rollouts": 8,
+      "pass@1": 0.0,
+      "task_completion_rate": 0.0,
+      "tool_call_schema_validity": 0.0,
+      "mean_turns": 4.0,
+      "perception_recall": 0.2708
+    },
+    "screenshot_ui": {
+      "n_items": 2,
+      "n_rollouts": 8,
+      "pass@1": 0.0,
+      "task_completion_rate": 0.0,
+      "tool_call_schema_validity": 0.0,
+      "mean_turns": 4.0,
+      "perception_recall": 0.125
+    },
+    "multi_frame": {
+      "n_items": 2,
+      "n_rollouts": 8,
+      "pass@1": 0.0,
+      "task_completion_rate": 0.0,
+      "tool_call_schema_validity": 0.0,
+      "mean_turns": 4.0,
+      "perception_recall": 0.2083
+    }
+  },
+  "environment": {
+    "device": "mps",
+    "model_tier": "tiny",
+    "model_id": "HuggingFaceTB/SmolVLM-256M-Instruct",
+    "dtype": "float32",
+    "backend": "hf",
+    "rollout_backend_requested": "hf",
+    "commit_sha": "f38b400",
+    "model_params": 256484928,
+    "load_seconds": 3.63,
+    "eval_wall_clock_sec": 382.54,
+    "eval_wall_clock_hours": 0.1063,
+    "timestamp": 1793959931
+  }
+}
