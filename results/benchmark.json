@@ -1,0 +1,72 @@
+{
+  "device": "mps",
+  "tier": "tiny",
+  "dtype": "float32",
+  "model_params": 256484928,
+  "max_new_tokens": 16,
+  "max_turns": 1,
+  "configs": [
+    {
+      "batch_size": 1,
+      "rollouts": 1,
+      "turns_total": 1,
+      "wall_seconds": 3.58,
+      "rollouts_per_min": 16.74,
+      "seconds_per_rollout": 3.58,
+      "peak_memory_mb": 1693.2
+    },
+    {
+      "batch_size": 4,
+      "rollouts": 4,
+      "turns_total": 4,
+      "wall_seconds": 9.81,
+      "rollouts_per_min": 24.45,
+      "seconds_per_rollout": 2.45,
+      "peak_memory_mb": 3186.5
+    }
+  ],
+  "grpo_run": {
+    "phase": "grpo",
+    "tier": "tiny",
+    "device": "mps",
+    "dtype": "float32",
+    "trainable_params": 5769216,
+    "steps": 3,
+    "group_size": 4,
+    "skipped_groups": 1,
+    "rollouts": 12,
+    "rollouts_per_min": 1.59,
+    "mean_step_seconds": 112.51,
+    "reward_first_window": 0.1941,
+    "reward_last_window": 0.0181,
+    "completion_first_window": 0.0,
+    "completion_last_window": 0.0,
+    "kl_beta": 0.02,
+    "clip_eps": 0.2,
+    "last_turn_only": false,
+    "peak_memory_mb": 5281.0,
+    "wall_clock_sec": 452.44,
+    "wall_clock_hours": 0.1257,
+    "commit_sha": "92d1644",
+    "checkpoint": "runs/tiny-main/grpo"
+  },
+  "sft_run": {
+    "phase": "sft",
+    "tier": "tiny",
+    "device": "mps",
+    "dtype": "float32",
+    "params": 262254144,
+    "trainable_params": 5769216,
+    "steps": 150,
+    "epochs": 2,
+    "examples": 400,
+    "batch_size": 1,
+    "grad_accum": 1,
+    "wall_clock_sec": 1515.87,
+    "wall_clock_hours": 0.4211,
+    "best_val_loss": 0.1342,
+    "final_val_loss": 0.1342,
+    "commit_sha": "92d1644",
+    "checkpoint": "runs/tiny-main/sft"
+  }
+}
