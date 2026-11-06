@@ -1,0 +1,70 @@
+{
+  "checkpoint": "sft",
+  "checkpoint_path": "runs/tiny-main/sft",
+  "split": "val",
+  "k": 1,
+  "n_items": 4,
+  "n_rollouts": 4,
+  "pass@1": 0.0,
+  "pass@k": 0.0,
+  "task_completion_rate": 0.0,
+  "tool_call_schema_validity": 0.3333,
+  "tool_call_schema_validity_rollout_mean": 0.125,
+  "mean_turns": 2.5,
+  "perception_recall": 0.3333,
+  "tool_trace_rate": 0.25,
+  "format_rate": 0.75,
+  "mean_reward": 0.1639,
+  "per_family": {
+    "chart_agg": {
+      "n_items": 1,
+      "n_rollouts": 1,
+      "pass@1": 0.0,
+      "task_completion_rate": 0.0,
+      "tool_call_schema_validity": 0.0,
+      "mean_turns": 1.0,
+      "perception_recall": 0.1667
+    },
+    "doc_table": {
+      "n_items": 1,
+      "n_rollouts": 1,
+      "pass@1": 0.0,
+      "task_completion_rate": 0.0,
+      "tool_call_schema_validity": 0.0,
+      "mean_turns": 2.0,
+      "perception_recall": 0.5
+    },
+    "screenshot_ui": {
+      "n_items": 1,
+      "n_rollouts": 1,
+      "pass@1": 0.0,
+      "task_completion_rate": 0.0,
+      "tool_call_schema_validity": 0.0,
+      "mean_turns": 3.0,
+      "perception_recall": 0.0
+    },
+    "multi_frame": {
+      "n_items": 1,
+      "n_rollouts": 1,
+      "pass@1": 0.0,
+      "task_completion_rate": 0.0,
+      "tool_call_schema_validity": 0.5,
+      "mean_turns": 4.0,
+      "perception_recall": 0.6667
+    }
+  },
+  "environment": {
+    "device": "mps",
+    "model_tier": "tiny",
+    "model_id": "HuggingFaceTB/SmolVLM-256M-Instruct",
+    "dtype": "float32",
+    "backend": "hf",
+    "rollout_backend_requested": "hf",
+    "commit_sha": "92d1644",
+    "model_params": 262254144,
+    "load_seconds": 13.42,
+    "eval_wall_clock_sec": 132.96,
+    "eval_wall_clock_hours": 0.0369,
+    "timestamp": 1793975806
+  }
+}

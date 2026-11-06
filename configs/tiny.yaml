@@ -30,9 +30,9 @@ sft:
   lora_alpha: 32
   lora_dropout: 0.05
   lr: 0.0001
-  epochs: 3
-  batch_size: 4
-  grad_accum: 2
+  epochs: 2
+  batch_size: 1
+  grad_accum: 1
   max_length: 1024
   warmup_ratio: 0.05
   max_steps: -1
@@ -41,8 +41,8 @@ sft:
   val_items: 8
 
 grpo:
-  group_size: 8
-  steps: 16
+  group_size: 4
+  steps: 3
   lr: 0.00001
   temperature: 0.9
   top_p: 0.95
@@ -53,8 +53,8 @@ grpo:
   prompts_per_step: 1
   max_length: 1280
   max_new_tokens: 64
-  max_turns: 4
-  val_every: 4
+  max_turns: 2
+  val_every: 2
   val_items: 6
   eval_k: 1
   skip_zero_variance: true
@@ -63,10 +63,10 @@ grpo:
 
 eval:
   k: 4
-  max_items: 8
+  max_items: 4
   temperature: 0.8
   max_turns: 4
-  max_new_tokens: 64
+  max_new_tokens: 96
   batch_size: 8
   split: test
 

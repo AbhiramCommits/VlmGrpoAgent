@@ -6,7 +6,7 @@ CONFIG ?= configs/tiny.yaml
 PYTEST ?= $(PY) -m pytest -q
 RUFF ?= $(PY) -m ruff
 
-.PHONY: setup smoke data eval-base sft grpo eval-all test lint report bench clean help
+.PHONY: setup smoke data eval-base sft grpo eval-sft eval-grpo eval-all test lint report bench clean help
 
 help:
 	@echo "targets: setup smoke data eval-base sft grpo eval-all test lint report bench"
@@ -25,11 +25,18 @@ data:                 ## generate the deterministic task suite + PNGs + stats
 eval-base:            ## BASE model zero-shot on val/test/test_hard
 	$(PY) -m vlmgrpo.evaluate --config $(CONFIG) --checkpoint base --splits val,test,test_hard
 
-sft:                  ## LoRA SFT cold start on gold trajectories
+sft:                  ## build gold SFT data + LoRA SFT cold start
+	$(PY) -m vlmgrpo.data.build_sft --config $(CONFIG)
 	$(PY) -m vlmgrpo.train_sft --config $(CONFIG)
 
 grpo:                 ## GRPO/RLVR online RL from the SFT checkpoint
 	$(PY) -m vlmgrpo.train_grpo --config $(CONFIG)
+
+eval-sft:             ## SFT checkpoint on val/test/test_hard
+	$(PY) -m vlmgrpo.evaluate --config $(CONFIG) --checkpoint sft --splits val,test,test_hard
+
+eval-grpo:            ## GRPO checkpoint on val/test/test_hard
+	$(PY) -m vlmgrpo.evaluate --config $(CONFIG) --checkpoint grpo --splits val,test,test_hard
 
 eval-all:             ## full {BASE,SFT,GRPO} x {test,test_hard} matrix
 	$(PY) -m vlmgrpo.analysis.compare --config $(CONFIG)

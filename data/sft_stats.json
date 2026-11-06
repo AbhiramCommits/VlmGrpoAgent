@@ -1,0 +1,26 @@
+{
+  "train": {
+    "examples": 400,
+    "skipped_over_max_length": 0,
+    "tasks": 160,
+    "max_length": 1024,
+    "prompt_tokens_mean": 125.5,
+    "prompt_tokens_median": 124.0,
+    "prompt_tokens_p95": 148,
+    "target_tokens_mean": 59.4,
+    "total_tokens_mean": 184.9,
+    "total_tokens_max": 307
+  },
+  "val": {
+    "examples": 100,
+    "skipped_over_max_length": 0,
+    "tasks": 40,
+    "max_length": 1024,
+    "prompt_tokens_mean": 125.5,
+    "prompt_tokens_median": 124.0,
+    "prompt_tokens_p95": 148,
+    "target_tokens_mean": 59.5,
+    "total_tokens_mean": 185.0,
+    "total_tokens_max": 307
+  }
+}

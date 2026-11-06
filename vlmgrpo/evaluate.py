@@ -113,28 +113,46 @@ def evaluate(
         raise RuntimeError(f"No items for split {split}")
     sfx = seed if seed is not None else cfg.seed
     seed_everything(sfx)
-    repeated = []
-    for rep in range(max(1, k)):
-        for item in items:
-            clone = TaskItem.from_dict(item.to_dict())
-            clone.seed = item.seed + rep * 1_000_003  # independent but deterministic sample tag
-            repeated.append(clone)
-
-    rollout_cfg = replace(
+    # Standard pass@k protocol: one greedy rollout per item for pass@1, plus
+    # k-1 temperature samples; pass@k counts any success among all k.
+    base_rollout = replace(
         cfg.rollout,
         max_turns=cfg.eval.max_turns,
         max_new_tokens=cfg.eval.max_new_tokens,
-        temperature=cfg.eval.temperature,
-        do_sample=True,
         batch_size=cfg.eval.batch_size,
     )
-    eval_cfg = replace(cfg, rollout=rollout_cfg, seed=sfx)
-    generator = make_generator(model, processor, eval_cfg, tier, device)
+    greedy_cfg = replace(cfg, rollout=replace(base_rollout, do_sample=False, temperature=0.0), seed=sfx)
+    sample_cfg = replace(
+        cfg,
+        rollout=replace(base_rollout, do_sample=True, temperature=cfg.eval.temperature, top_p=0.95),
+        seed=sfx,
+    )
+    generator = make_generator(model, processor, sample_cfg, tier, device)
 
     t0 = time.perf_counter()
-    trajectories = run_episodes(
-        model, processor, repeated, eval_cfg, generator=generator, tier=tier, device=device
+    greedy_trajs = run_episodes(
+        model, processor, items, greedy_cfg, generator=generator, tier=tier, device=device
     )
+    n_samples = max(0, int(k) - 1)
+    sampled: list[Any] = []
+    sampled_items: list[TaskItem] = []
+    if n_samples:
+        for rep in range(n_samples):
+            for item in items:
+                clone = TaskItem.from_dict(item.to_dict())
+                clone.seed = item.seed + (rep + 1) * 1_000_003
+                sampled_items.append(clone)
+        sampled = run_episodes(
+            model, processor, sampled_items, sample_cfg, generator=generator, tier=tier, device=device
+        )
+    trajectories = []
+    repeated = []
+    for idx, item in enumerate(items):
+        trajectories.append(greedy_trajs[idx])
+        repeated.append(item)
+        for rep in range(n_samples):
+            trajectories.append(sampled[rep * len(items) + idx])
+            repeated.append(sampled_items[rep * len(items) + idx])
     wall = time.perf_counter() - t0
 
     rows: list[dict[str, Any]] = []
